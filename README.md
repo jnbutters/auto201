@@ -1,4 +1,7 @@
 # auto201
+
+![](images/F5_AWS_Terraform.png)
+
 To find the aws image filter, use the aws cli:
 
 aws ec2 describe-images --region eu-west-2 --filters "Name=name,Values=*BIGIP-15.1.1*PAYG-Best*25Mbps*" | grep '\"Name\"\|\"ImageId\"'
