@@ -22,9 +22,9 @@ mgmt: 10.0.1.0/24
 public: 10.0.2.0/24
 private: 10.0.3.0/24
 
-Passowrd:
+Password:
 
-id=Ruixopr6Tn
+id in terraform.tfstate file
 
 Debug:
 
