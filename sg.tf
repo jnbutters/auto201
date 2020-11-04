@@ -1,6 +1,6 @@
 resource "aws_security_group" "mgmt" {
-  name        = "allow_mgmt"
-  vpc_id      = module.vpc.vpc_id
+  name   = "allow_mgmt"
+  vpc_id = module.vpc.vpc_id
   ingress {
     description = "SSH for MGMT"
     from_port   = 22
@@ -27,8 +27,8 @@ resource "aws_security_group" "mgmt" {
 }
 
 resource "aws_security_group" "public" {
-  name        = "allow_public"
-  vpc_id      = module.vpc.vpc_id
+  name   = "allow_public"
+  vpc_id = module.vpc.vpc_id
   ingress {
     description = "HTTP for Public"
     from_port   = 80
@@ -65,13 +65,13 @@ resource "aws_security_group" "nginx" {
     protocol    = "icmp"
     cidr_blocks = ["10.0.0.0/16"]
   }
-    ingress {
+  ingress {
     from_port   = 8
     to_port     = 0
     protocol    = "icmp"
     cidr_blocks = ["10.0.0.0/16"]
   }
-    ingress {
+  ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -134,6 +134,6 @@ resource "aws_security_group" "consul" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name  = "consul"
+    Name = "consul"
   }
 }
