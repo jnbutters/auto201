@@ -1,5 +1,18 @@
 # auto201
 
+This deployment will build the following components:
+
+- AWS infrastructure using the VPC module and other aws_ resources
+- An NGINX autoscale group, to provide a simple web app
+- Hashicorp Consul for service discovery
+- A single BIG-IP with 3 NICs
+    - BIG-IP is configured via a user-data script injected on first booot, that performs the following tasks:
+        - downloads and installs bigip_runtime_init package
+        - provides bigip_runtime_init with its yaml configuration file
+        - bigip_runtime_init installs DO, AS3 packages (plus other Automation Toolchain components)
+        - bigip_runtime_init declares the DO and AS3 json configurations
+    - BIG-IP is reported ready when the NGINX application is available via the Virtual Server.
+
 ![](images/F5_AWS_Terraform.png)
 
 To find the aws image filter, use the aws cli:
@@ -12,12 +25,14 @@ OwnerId added as we use in data lookup for ami.
 
 Terraform uses credentials in ~/aws/credentials
 
+
 - tfswitch -- Switch into a particular version of terraform.
 - terraform init  -- initialise terraform
 - terraform plan  -- plan changes
 - terraform apply -- apply changes
 - terraform fmt   -- formats the tf files
 - terraform console -- Console ouptut
+
 
 - AZ:
 
@@ -70,7 +85,7 @@ tags = {
 
 - This is the fixed version of the template_file configuration block:
 
-data "template_file" "f5_init" {
+<!-- data "template_file" "f5_init" {
   template = file("./templates/user_data_json.tpl")
   vars = {
     hostname    = "mybigip.f5.com",
@@ -83,7 +98,7 @@ data "template_file" "f5_init" {
     do_declaration  = data.template_file.do.rendered,
     as3_declaration = data.template_file.as3.rendered
   }
-}
+} -->
 
 We didn't get to walk through all of the resulting configuration, so highlights are:
 
