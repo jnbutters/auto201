@@ -12,32 +12,34 @@ OwnerId added as we use in data lookup for ami.
 
 Terraform uses credentials in ~/aws/credentials
 
-tfswitch -- Switch into a particular version of terraform.
-terraform init  -- initialise terraform
-terraform plan  -- plan changes
-terraform apply -- apply changes
-terraform fmt   -- formats the tf files
+- tfswitch -- Switch into a particular version of terraform.
+- terraform init  -- initialise terraform
+- terraform plan  -- plan changes
+- terraform apply -- apply changes
+- terraform fmt   -- formats the tf files
+- terraform console -- Console ouptut
 
-AZ:
+- AZ:
 
 eu-west-2a
 
-Subnets:
+- Subnets:
 
 mgmt: 10.0.1.0/24
 public: 10.0.2.0/24
 private: 10.0.3.0/24
 
-Password:
+- Password:
 
 id in terraform.tfstate file
 
-Debug:
+- Debug:
 
 Turn on:  export TF_LOG=DEBUG
+
 Turn off: export TF_LOG=""
 
-Variables:
+- Variables:
 
 variable "f5_ami_search_name" {
   description = "filter used to find AMI for deployment"
@@ -52,17 +54,21 @@ tags = {
     UK-SE = var.uk_se_name
   }
   
-  Interpolation required when appending string to variable.
+-  Interpolation required when appending string to variable.
 
-main.tf -- Generate random password and fetch my ip
-vpc.tf -- Create Simple VPC
-sg.tf -- Create Security Groups
-eni.tf -- Create Elastic Network Interfaces
-eip.tf -- Create Elastic IP
-ec2.tf -- Lookup AMI and create instance
-ssh.tf -- Creates Key Pair
+- main.tf -- Generate random password and fetch my ip
+- vpc.tf -- Create Simple VPC
+- sg.tf -- Create Security Groups
+- eni.tf -- Create Elastic Network Interfaces
+- eip.tf -- Create Elastic IP
+- ec2.tf -- Lookup AMI and create instance
+- ssh.tf -- Creates Key Pair
+- nginx.tf -- Creates nginx
+- consul.tf -- Creates consul mesh
+- outputs.tf -- Output variables
+- vars.tf -- Prefix Variables
 
-This is the fixed version of the template_file configuration block:
+- This is the fixed version of the template_file configuration block:
 
 data "template_file" "f5_init" {
   template = file("./templates/user_data_json.tpl")
@@ -81,9 +87,9 @@ data "template_file" "f5_init" {
 
 We didn't get to walk through all of the resulting configuration, so highlights are:
 
-open the Consul URI and check that the NGINX instances are registered.
-check in AWS that the EC2 > Autoscale Group is configured for NGINX.  You can scale up/down.
-note that AS3 does not include pool members.  They are populated by AS3 pulling the NGINX IPs from Consul.
-note that as you scale up/down NIGINX instances, AS3 updates the pool members automatically.
-Terraform apply from scratch should take 7/8 mins. 
-Now you have an easy to use F5 lab.
+- open the Consul URI and check that the NGINX instances are registered.
+- check in AWS that the EC2 > Autoscale Group is configured for NGINX.  You can scale up/down.
+- note that AS3 does not include pool members.  They are populated by AS3 pulling the NGINX IPs from Consul.
+- note that as you scale up/down NIGINX instances, AS3 updates the pool members automatically.
+- Terraform apply from scratch should take 7/8 mins. 
+- Now you have an easy to use F5 lab.
